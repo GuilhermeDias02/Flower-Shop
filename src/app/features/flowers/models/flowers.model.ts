@@ -1,6 +1,6 @@
 export interface Flower {
   id: number;
-  title: string;
+  name: string;
   description: string;
   price: number;
   origin: string;
