@@ -1,3 +1,5 @@
+import { Cart } from '../../cart/models/cart.model';
+
 export interface User {
   id: number;
   name: string;
@@ -5,14 +7,15 @@ export interface User {
   password: string;
   role: 'user' | 'admin';
   createdAt: Date;
+  cart?: Cart;
 }
 
-export interface LoginRequest {
+export interface LoginDTO {
   email: string;
   password: string;
 }
 
-export interface RegisterRequest {
+export interface RegisterDTO {
   name: string;
   email: string;
   password: string;
