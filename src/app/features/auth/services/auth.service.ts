@@ -139,8 +139,9 @@ export class AuthService {
       this.users = JSON.parse(storedUsers) as User[];
       this.passwords = JSON.parse(storedPasswords) as Record<string, string>;
       return true;
+    } else {
+      this.saveUsersToStorage();
+      return false;
     }
-
-    return false;
   }
 }

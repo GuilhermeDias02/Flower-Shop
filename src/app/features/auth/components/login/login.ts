@@ -47,9 +47,16 @@ import { User } from '../../models/user.model';
           <button
             type="submit"
             [disabled]="loginForm.invalid || loading()"
-            class="w-full py-2 mt-4 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition"
+            class="w-full py-2 mt-4 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition disabled:opacity-50"
           >
-            Login
+            @if (loading()) {
+              <span
+                class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"
+              ></span>
+              Connection...
+            } @else {
+              Login
+            }
           </button>
 
           @if (error()) {

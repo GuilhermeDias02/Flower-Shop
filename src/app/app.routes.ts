@@ -14,7 +14,6 @@ export const routes: Routes = [
   },
   {
     path: 'flowers',
-    // canActivate: [authGuard],
     loadChildren: () => import('./features/flowers/flowers.routes').then((m) => m.TODOS_ROUTES),
   },
   {
