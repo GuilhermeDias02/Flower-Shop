@@ -11,6 +11,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 // Validateur personnalisé pour la confirmation de mot de passe
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -26,8 +27,9 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, HeaderComponent],
   template: `
+    <app-header [pageTitle]="'Register'"></app-header>
     <div class="flex w-full items-center justify-center min-h-screen">
       <div class="w-full max-w-md bg-white rounded-2xl shadow-lg border-2 p-8">
         <h2 class="text-2xl font-bold text-center text-gray-800">Register</h2>

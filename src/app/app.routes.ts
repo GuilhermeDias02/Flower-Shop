@@ -5,7 +5,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth' /*flowers*/,
+    redirectTo: 'flowers',
     pathMatch: 'full',
   },
   {

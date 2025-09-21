@@ -1,7 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable, of, throwError, delay } from 'rxjs';
 import { User, LoginDTO, RegisterDTO } from '../models/user.model';
 import bcrypt from 'bcryptjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import bcrypt from 'bcryptjs';
 export class AuthService {
   private currentUser = signal<User | null>(null);
   public currentUser$ = this.currentUser.asReadonly();
+  private router = inject(Router);
 
   // Mock data - utilisateurs de test
   private users: User[] = [
@@ -87,6 +89,7 @@ export class AuthService {
   logout(): void {
     this.currentUser.set(null);
     localStorage.removeItem('currentUser');
+    this.router.navigate(['/auth/login']);
   }
 
   getCurrentUser(): User | null {

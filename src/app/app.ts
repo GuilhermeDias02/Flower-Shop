@@ -5,8 +5,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template: `
-    <!-- <app-header /> -->
-    <main class="container mx-auto p-4">
+    <main class="blockcontainer w-full p-4">
       <!-- <app-pwa-prompt> </app-pwa-prompt> -->
       <router-outlet />
     </main>
