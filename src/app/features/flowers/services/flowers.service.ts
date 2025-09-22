@@ -15,6 +15,15 @@ export class FlowerService {
       origin: 'France',
       bouquet: false,
     },
+    {
+      id: 2,
+      name: 'rose',
+      description:
+        'Garden roses are predominantly hybrid roses that are grown as ornamental plants in private or public gardens. They are one of the most popular and widely cultivated groups of flowering plants, especially in temperate climates. An enormous number of garden cultivars has been produced, especially over the last two centuries, though roses have been known in the garden for millennia beforehand. While most garden roses are grown for their flowers, often in dedicated rose gardens, some are also valued for other reasons, such as having ornamental fruit, providing ground cover, or for hedging.',
+      price: 35.23,
+      origin: 'France',
+      bouquet: true,
+    },
   ];
 
   getAllFlowers(): Flower[] {

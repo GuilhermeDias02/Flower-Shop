@@ -16,34 +16,38 @@ import { FlowerService } from '../services/flowers.service';
         <!-- Close Button -->
         <button
           (click)="onClose()"
-          class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
+          class="absolute top-1 right-3 text-gray-500 hover:text-gray-800 text-2xl font-bold"
         >
           &times;
         </button>
 
         <!-- Flower Image -->
-        <img
-          [src]="imagePath(selectedFlower()!)"
-          [alt]="selectedFlower()?.name"
-          class="w-full h-64 object-cover rounded-lg mb-4"
-        />
+        <div class="p-4">
+          <img
+            [src]="imagePath(selectedFlower()!)"
+            [alt]="selectedFlower()?.name"
+            class="w-full h-64 object-cover rounded-lg mb-4"
+          />
 
-        <!-- Flower Name -->
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ selectedFlower()?.name }}</h2>
+          <!-- Flower Name -->
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ selectedFlower()?.name }}</h2>
 
-        <!-- Description -->
-        <p class="text-gray-700 mb-2">{{ selectedFlower()?.description }}</p>
+          <!-- Description -->
+          <p class="text-gray-700 mb-2">{{ selectedFlower()?.description }}</p>
 
-        <!-- Origin -->
-        <p class="text-gray-500 mb-4"><strong>Origin:</strong> {{ selectedFlower()?.origin }}</p>
+          <!-- Origin -->
+          <p class="text-gray-500 mb-4"><strong>Origin:</strong> {{ selectedFlower()?.origin }}</p>
 
-        <!-- Buy Button -->
-        <button
-          (click)="onBuy()"
-          class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition"
-        >
-          Buy
-        </button>
+          <p class="text-gray-700 mb-2">{{ selectedFlower()?.price }}€</p>
+
+          <!-- Buy Button -->
+          <button
+            (click)="onBuy()"
+            class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition"
+          >
+            Buy
+          </button>
+        </div>
       </div>
     </div>
   `,
