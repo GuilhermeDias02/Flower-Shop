@@ -43,7 +43,8 @@ import { FlowerService } from '../services/flowers.service';
           <!-- Buy Button -->
           <button
             (click)="onBuy()"
-            class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition"
+            [disabled]="disableShop()"
+            class="w-full bg-green-500 hover:bg-green-600 cursor-pointer text-white py-2 rounded-lg transition disabled:opacity-50 disabled:hover:bg-green-500 disabled:cursor-default"
           >
             Buy
           </button>
@@ -57,12 +58,15 @@ export class FlowerPopInComponent {
   //   private cartService = inject(CartService);//todo: create CartService
   private flowerService = inject(FlowerService);
   selectedFlower = input<Flower | null>();
-  //   onCloseFunction = input<void>();
+  disableShop = input<boolean>(true);
   @Output() closeFunction = new EventEmitter<void>();
   connected = this.authService.getCurrentUser() ? true : false;
 
   //todo: implement onBuy from cartService
   onBuy(): void {
+    // if (disabledShop) {
+    // redirect login
+    // }
     //this.cartService.addToCart(selectedFlower);
   }
 

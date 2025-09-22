@@ -8,7 +8,9 @@ import { FlowerService } from '../services/flowers.service';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="max-w-xs bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+    <div
+      class="m-3 max-w-xs bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition"
+    >
       <!-- Flower Image -->
       <img [src]="imagePath(flower()!)" [alt]="flower()?.name" class="w-full h-48 object-cover" />
 
@@ -32,7 +34,6 @@ import { FlowerService } from '../services/flowers.service';
 export class FlowerCardComponent {
   private flowerService = inject(FlowerService);
   flower = input<Flower>();
-  //   displayDetailsFunction = input<CallableFunction>();
   @Output() showDetails = new EventEmitter<number>();
 
   imagePath(flower?: Flower): string {

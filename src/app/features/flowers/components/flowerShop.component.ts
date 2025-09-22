@@ -19,6 +19,7 @@ import { FlowerPopInComponent } from './flowerPopIn.component';
     @if (showPopin()) {
       <app-flower-popin
         [selectedFlower]="this.selectedFlower()"
+        [disableShop]="false"
         (closeFunction)="onClosePopin()"
       ></app-flower-popin>
     }
