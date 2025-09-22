@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Flower } from '../models/flowers.model';
 import { AuthService } from '../../auth/services/auth.service';
 import { FlowerService } from '../services/flowers.service';
+import { Router } from '@angular/router';
+import { CartService } from '../../cart/services/cart.service';
 
 @Component({
   selector: 'app-flower-popin',
@@ -55,19 +57,19 @@ import { FlowerService } from '../services/flowers.service';
 })
 export class FlowerPopInComponent {
   private authService = inject(AuthService);
-  //   private cartService = inject(CartService);//todo: create CartService
+  private cartService = inject(CartService);
   private flowerService = inject(FlowerService);
+  private router = inject(Router);
   selectedFlower = input<Flower | null>();
   disableShop = input<boolean>(true);
   @Output() closeFunction = new EventEmitter<void>();
   connected = this.authService.getCurrentUser() ? true : false;
 
-  //todo: implement onBuy from cartService
   onBuy(): void {
-    // if (disabledShop) {
-    // redirect login
-    // }
-    //this.cartService.addToCart(selectedFlower);
+    if (this.disableShop()) {
+      this.router.navigate(['/auth/login']);
+    }
+    this.cartService.addToCart(this.authService.currentUser$()?.id, this.selectedFlower()?.id);
   }
 
   imagePath(flower?: Flower): string {

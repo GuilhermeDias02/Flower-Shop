@@ -11,11 +11,13 @@ import { FlowerPopInComponent } from './flowerPopIn.component';
   standalone: true,
   imports: [CommonModule, HeaderComponent, FlowerCardComponent, FlowerPopInComponent],
   template: `
-    <app-header [pageTitle]="'Shop'"></app-header>
+    <app-header [pageTitle]="'Shop'" [homeLink]="'/shop'"></app-header>
     FlowerShop
-    @for (flower of flowers; track flower.id) {
-      <app-flower-card [flower]="flower" (showDetails)="onShowDetails($event)"></app-flower-card>
-    }
+    <div class="flex flex-row flex-wrap ">
+      @for (flower of flowers; track flower.id) {
+        <app-flower-card [flower]="flower" (showDetails)="onShowDetails($event)"></app-flower-card>
+      }
+    </div>
     @if (showPopin()) {
       <app-flower-popin
         [selectedFlower]="this.selectedFlower()"

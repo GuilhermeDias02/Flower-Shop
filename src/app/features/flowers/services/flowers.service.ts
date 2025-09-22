@@ -37,4 +37,20 @@ export class FlowerService {
 
     return '';
   }
+
+  getFlowerById(flowerId: number): Flower | null {
+    const foundFlower = this.flowers.find((f) => f.id === flowerId);
+    if (foundFlower) {
+      return foundFlower;
+    }
+    return null;
+  }
+
+  getFlowerNameById(flowerId: number): string {
+    const flower = this.getFlowerById(flowerId);
+    if (flower) {
+      return flower.name;
+    }
+    return 'error';
+  }
 }
