@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Flower } from '../models/flowers.model';
+import { FlowerService } from '../services/flowers.service';
 
 @Component({
   selector: 'app-flower-card',
@@ -9,11 +10,7 @@ import { Flower } from '../models/flowers.model';
   template: `
     <div class="max-w-xs bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
       <!-- Flower Image -->
-      <img
-        [src]="'assets/images/' + flower()?.name + '.webp'"
-        [alt]="flower()?.name"
-        class="w-full h-48 object-cover"
-      />
+      <img [src]="imagePath(flower()!)" [alt]="flower()?.name" class="w-full h-48 object-cover" />
 
       <!-- Flower Name -->
       <div class="p-4">
@@ -33,6 +30,18 @@ import { Flower } from '../models/flowers.model';
   `,
 })
 export class FlowerCardComponent {
+  private flowerService = inject(FlowerService);
   flower = input<Flower>();
-  displayDetailsFunction = input<void>();
+  //   displayDetailsFunction = input<CallableFunction>();
+  @Output() showDetails = new EventEmitter<number>();
+
+  imagePath(flower?: Flower): string {
+    return this.flowerService.getFlowerImagePath(flower);
+  }
+
+  displayDetailsFunction() {
+    if (this.flower()) {
+      this.showDetails.emit(this.flower()!.id);
+    }
+  }
 }

@@ -1,33 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { Flower } from '../models/flowers.model';
 import { FlowerCardComponent } from './flowerCard.component';
+import { FlowerService } from '../services/flowers.service';
+import { FlowerPopInComponent } from './flowerPopIn.component';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FlowerCardComponent],
+  imports: [CommonModule, HeaderComponent, FlowerCardComponent, FlowerPopInComponent],
   template: `
     <app-header [pageTitle]="'Shop'"></app-header>
     FlowerShop
-    <app-flower-card
-      [flower]="this.flower"
-      [displayDetailsFunction]="showDetails()"
-    ></app-flower-card>
+    @for (flower of flowers; track flower.id) {
+      <app-flower-card [flower]="flower" (showDetails)="onShowDetails($event)"></app-flower-card>
+    }
+    @if (showPopin()) {
+      <app-flower-popin
+        [selectedFlower]="this.selectedFlower()"
+        (closeFunction)="onClosePopin()"
+      ></app-flower-popin>
+    }
   `,
 })
 export class FlowerShopComponent {
-  flower: Flower = {
-    id: 1,
-    name: 'red',
-    description: 'description',
-    price: 11.25,
-    origin: 'France',
-    bouquet: false,
-  };
+  private flowerService = inject(FlowerService);
+  flowers = this.flowerService.getAllFlowers();
+  showPopin = signal(false);
+  selectedFlower = signal<Flower | null>(null);
 
-  showDetails(): void {
-    console.log('show details');
+  onShowDetails(flowerId: number): void {
+    const foundFlower = this.flowers.find((f: Flower) => f.id === flowerId);
+    if (foundFlower) {
+      this.showPopin.set(true);
+      this.selectedFlower.set(foundFlower);
+    } else {
+      console.warn(`Flower with id ${flowerId} not found`);
+    }
+  }
+
+  onClosePopin(): void {
+    this.showPopin.set(false);
+    this.selectedFlower.set(null);
   }
 }

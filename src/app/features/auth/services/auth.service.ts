@@ -44,7 +44,7 @@ export class AuthService {
       this.currentUser.set(JSON.parse(savedUser));
     }
 
-    if (this.loadUsersFromStorage()) console.log('Users and passwords loaded from local storage');
+    if (this.loadUsersFromStorage()) console.warn('Users and passwords loaded from local storage');
   }
 
   login(credentials: LoginDTO): Observable<User> {

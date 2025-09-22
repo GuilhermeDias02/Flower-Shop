@@ -11,10 +11,10 @@ import { Flower } from '../models/flowers.model';
   template: `
     <app-header [pageTitle]="'Home Page'"></app-header>
     FlowerHomePage
-    <app-flower-card
+    <!-- <app-flower-card
       [flower]="this.flower"
       [displayDetailsFunction]="showDetails()"
-    ></app-flower-card>
+    ></app-flower-card> -->
   `,
 })
 export class FlowersHomePageComponent {
@@ -28,6 +28,6 @@ export class FlowersHomePageComponent {
   };
 
   showDetails(): void {
-    console.log('show details');
+    // console.warn('show details');
   }
 }
