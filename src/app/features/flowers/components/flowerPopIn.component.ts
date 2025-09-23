@@ -70,6 +70,7 @@ export class FlowerPopInComponent {
       this.router.navigate(['/auth/login']);
     }
     this.cartService.addToCart(this.authService.currentUser$()?.id, this.selectedFlower()?.id);
+    this.cartService.updateCartCount();
   }
 
   imagePath(flower?: Flower): string {

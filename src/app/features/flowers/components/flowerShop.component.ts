@@ -32,6 +32,7 @@ export class FlowerShopComponent {
   flowers = this.flowerService.getAllFlowers();
   showPopin = signal(false);
   selectedFlower = signal<Flower | null>(null);
+  cartCount = signal<number>(0);
 
   onShowDetails(flowerId: number): void {
     const foundFlower = this.flowers.find((f: Flower) => f.id === flowerId);

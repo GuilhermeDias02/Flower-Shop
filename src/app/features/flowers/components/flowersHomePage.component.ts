@@ -9,7 +9,8 @@ import { Flower } from '../models/flowers.model';
   standalone: true,
   imports: [CommonModule, HeaderComponent, FlowerCardComponent],
   template: `
-    <app-header [pageTitle]="'Home Page'"></app-header>
+    <app-header [pageTitle]="'Home Page'"></app-header
+    ><!-- todo: home link = shop if connected -->
     FlowerHomePage
     <!-- <app-flower-card
       [flower]="this.flower"

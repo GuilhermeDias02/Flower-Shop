@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { AuthService } from '../../auth/services/auth.service';
 import { CartService } from '../services/cart.service';
@@ -8,7 +9,7 @@ import { Cart } from '../models/cart.model';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [HeaderComponent],
+  imports: [HeaderComponent, CurrencyPipe],
   template: `
     <app-header [pageTitle]="'Cart'" [homeLink]="'/shop'"></app-header>
     <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-auto">
@@ -42,6 +43,12 @@ import { Cart } from '../models/cart.model';
         } @else {
           <p class="text-gray-500">Your cart is empty 🌸</p>
         }
+
+        <!-- Cart total -->
+        <div class="pt-4 flex justify-between text-lg font-semibold text-gray-800">
+          <span>Total:</span>
+          <span>{{ totalPrice() | currency: 'EUR' }}</span>
+        </div>
 
         <!-- Pay Button -->
         <div class="pt-4">
@@ -78,27 +85,42 @@ export class CartComponent {
     return [];
   }
 
-  increase(flowerId?: number): void {
-    if (this.userCart() && flowerId) {
-      const current = this.userCart()?.flowers.get(flowerId) ?? 0;
-      this.userCart()?.flowers.set(flowerId, current + 1);
-    } else {
-      console.warn('Tried increasing element with an empty cart');
+  increase(flowerId?: number) {
+    const cart = this.userCart();
+    if (cart && flowerId) {
+      const newFlowers = new Map(cart?.flowers);
+      const currentQuantity = newFlowers.get(flowerId) ?? 0;
+      newFlowers.set(flowerId, currentQuantity + 1);
+
+      // ✅ set a NEW cart object so signal updates
+      this.userCart.set({ ...cart, flowers: newFlowers });
+      this.cartService.updateCarts(this.userCart());
     }
   }
 
   decrease(flowerId?: number) {
-    if (this.userCart() && flowerId) {
-      const current = this.userCart()?.flowers.get(flowerId) ?? 0;
-      if (current > 1) {
-        this.userCart()?.flowers.set(flowerId, current - 1);
+    const cart = this.userCart();
+    if (cart && flowerId) {
+      const newFlowers = new Map(cart?.flowers);
+      const currentQuantity = newFlowers.get(flowerId) ?? 0;
+
+      if (currentQuantity > 1) {
+        newFlowers.set(flowerId, currentQuantity - 1);
       } else {
-        this.userCart()?.flowers.delete(flowerId);
+        newFlowers.delete(flowerId);
       }
-    } else {
-      console.warn('Tried decreasing element with an empty cart');
+
+      this.userCart.set({ ...cart, flowers: newFlowers });
+      this.cartService.updateCarts(this.userCart());
     }
   }
+
+  totalPrice = computed(() =>
+    Array.from(this.userCart()?.flowers.entries() ?? []).reduce((sum, [flowerId, quantity]) => {
+      const flower = this.flowerService.getFlowerById(flowerId);
+      return sum + (flower ? flower.price * quantity : 0);
+    }, 0),
+  );
 
   onPay(): void {
     //todo: payement

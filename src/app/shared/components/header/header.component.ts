@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, inject, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../features/auth/services/auth.service';
+import { CartService } from '../../../features/cart/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -47,11 +48,11 @@ import { AuthService } from '../../../features/auth/services/auth.service';
             </svg>
 
             <!-- Example badge -->
-            @if (cartCount > 0) {
+            @if (cartCount() > 0) {
               <span
                 class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5"
               >
-                {{ cartCount }}
+                {{ cartCount() }}
               </span>
             }
           </button>
@@ -108,11 +109,12 @@ import { AuthService } from '../../../features/auth/services/auth.service';
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
+  private cartService = inject(CartService);
   private eRef = inject(ElementRef);
   private router = inject(Router);
   pageTitle = input<string>('Error loading page title');
   homeLink = input<string>('');
-  cartCount = 2;
+  cartCount = this.cartService.getCartCount();
 
   currentUser = this.authService.currentUser$;
 
