@@ -8,7 +8,7 @@ export interface Flower {
 }
 
 export interface AddFlowerDTO {
-  title: string;
+  name: string;
   description: string;
   price: number;
   origin: string;

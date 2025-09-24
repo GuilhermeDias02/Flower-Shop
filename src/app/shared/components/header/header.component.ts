@@ -79,6 +79,17 @@ import { CartService } from '../../../features/cart/services/cart.service';
                   </div>
                 </div>
                 <hr class="my-3" />
+                @if (isAdmin()) {
+                  <div class="p-4">
+                    <button
+                      type="button"
+                      (click)="adminMenu()"
+                      class="block w-full text-left text-red-600 hover:underline cursor-pointer bg-transparent border-0 p-0"
+                    >
+                      Admin menu
+                    </button>
+                  </div>
+                }
                 <div class="p-4">
                   <button
                     type="button"
@@ -139,7 +150,15 @@ export class HeaderComponent {
     }
   }
 
-  onCartClick() {
+  onCartClick(): void {
     this.router.navigate(['/cart']);
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  adminMenu(): void {
+    this.router.navigate(['/admin']);
   }
 }

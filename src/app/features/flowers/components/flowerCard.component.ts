@@ -2,11 +2,12 @@ import { Component, EventEmitter, inject, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Flower } from '../models/flowers.model';
 import { FlowerService } from '../services/flowers.service';
+import { BouquetNamePipe } from '../../../shared/pipes/bouquet.pipe';
 
 @Component({
   selector: 'app-flower-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BouquetNamePipe],
   template: `
     <div class="m-3 w-64 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
       <!-- Flower Image -->
@@ -14,7 +15,7 @@ import { FlowerService } from '../services/flowers.service';
 
       <!-- Flower Name -->
       <div class="p-4">
-        <h3 class="text-lg font-semibold text-gray-800">{{ flower()?.name }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">{{ flower()! | bouquetName }}</h3>
       </div>
 
       <!-- Show Details Button -->

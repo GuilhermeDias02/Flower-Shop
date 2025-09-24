@@ -19,6 +19,7 @@ import { Flower } from '../models/flowers.model';
   `,
 })
 export class FlowersHomePageComponent {
+  //todo: complete like the shop page or refacture to join
   flower: Flower = {
     id: 1,
     name: 'red',

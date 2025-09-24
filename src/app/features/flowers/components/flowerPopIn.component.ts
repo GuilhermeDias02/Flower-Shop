@@ -40,7 +40,7 @@ import { CartService } from '../../cart/services/cart.service';
           <!-- Origin -->
           <p class="text-gray-500 mb-4"><strong>Origin:</strong> {{ selectedFlower()?.origin }}</p>
 
-          <p class="text-gray-700 mb-2">{{ selectedFlower()?.price }}€</p>
+          <p class="text-gray-700 mb-2">{{ selectedFlower()?.price | currency: 'EUR' }}</p>
 
           <!-- Buy Button -->
           <button

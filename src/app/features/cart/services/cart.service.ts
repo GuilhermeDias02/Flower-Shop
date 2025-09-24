@@ -8,7 +8,6 @@ import { AuthService } from '../../auth/services/auth.service';
 export class CartService {
   private authService = inject(AuthService);
 
-  //todo: sync carts to localStorage
   private carts: Cart[] = [
     {
       flowers: new Map([

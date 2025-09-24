@@ -147,4 +147,12 @@ export class AuthService {
       return false;
     }
   }
+
+  isAdmin(): boolean {
+    return (
+      this.currentUser$() !== undefined &&
+      this.currentUser$() !== null &&
+      this.currentUser$()?.role === 'admin'
+    );
+  }
 }
