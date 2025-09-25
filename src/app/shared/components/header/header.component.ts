@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, input } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../features/auth/services/auth.service';
 import { CartService } from '../../../features/cart/services/cart.service';
@@ -14,7 +14,7 @@ import { CartService } from '../../../features/cart/services/cart.service';
       <div class="flex items-center justify-between px-8 py-4 relative">
         <!-- Left: Logo -->
         <div class="text-2xl font-extrabold text-indigo-700 tracking-wide hover:cursor-pointer">
-          <a [routerLink]="'/flowers' + this.homeLink()">🌸 Flower Shop</a>
+          <a [routerLink]="'/flowers' + this.homeLink">🌸 Flower Shop</a>
         </div>
 
         <!-- Center: Page Title -->
@@ -26,37 +26,40 @@ import { CartService } from '../../../features/cart/services/cart.service';
 
         <!-- Right -->
         <div class="relative flex items-center gap-6">
-          <button
-            type="button"
-            (click)="onCartClick()"
-            class="relative text-gray-700 hover:text-indigo-700 transition"
-          >
-            <!-- Cart Icon (Heroicons) -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              class="w-7 h-7"
+          @if (currentUser()) {
+            <button
+              type="button"
+              (click)="onCartClick()"
+              class="relative text-gray-700 hover:text-indigo-700 transition"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437m0 0L6.75 14.25h10.5l2.25-7.5H6.75m-1.644-3.978L6.75 14.25m0 0L5.25 18h13.5M9 21a.75.75 0 100-1.5.75.75 0 000 1.5zm6 0a.75.75 0 100-1.5.75.75 0 000 1.5z"
-              />
-            </svg>
-
-            <!-- Example badge -->
-            @if (cartCount() > 0) {
-              <span
-                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5"
+              <!-- Cart Icon (Heroicons) -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-7 h-7"
               >
-                {{ cartCount() }}
-              </span>
-            }
-          </button>
-          <!-- If user is logged in -->
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437m0 0L6.75 14.25h10.5l2.25-7.5H6.75m-1.644-3.978L6.75 14.25m0 0L5.25 18h13.5M9 21a.75.75 0 100-1.5.75.75 0 000 1.5zm6 0a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                />
+              </svg>
+
+              <!-- Example badge -->
+              @if (cartCount() > 0) {
+                <span
+                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5"
+                >
+                  {{ cartCount() }}
+                </span>
+              }
+            </button>
+          }
+
+          <!-- Profile button -->
           <button (click)="toggleMenu()" class="focus:outline-none ">
             <img
               src="assets/avatar/defaultAvatar.webp"
@@ -124,10 +127,9 @@ export class HeaderComponent {
   private eRef = inject(ElementRef);
   private router = inject(Router);
   pageTitle = input<string>('Error loading page title');
-  homeLink = input<string>('');
-  cartCount = this.cartService.getCartCount();
-
   currentUser = this.authService.currentUser$;
+  homeLink = this.currentUser() ? '/shop' : '';
+  cartCount = this.currentUser() ? this.cartService.getCartCount() : signal<number>(0);
 
   constructor() {
     this.currentUser = this.authService.currentUser$;

@@ -27,16 +27,18 @@ export class CartService {
   );
 
   constructor() {
+    console.log('!cart service loaded!');
     if (this.loadCartsFromStorage()) console.warn('Carts loaded from local storage');
   }
 
   //Returns the current user's cart or false if it's empty
   getUserCart(userId?: number): Cart | null {
-    if (!userId) throw Error('A user id must be provided');
-
-    const userCart = this.carts.find((c: Cart) => c.userId === userId);
-    if (userCart) {
-      return userCart;
+    console.warn('!get user cart called!');
+    if (userId) {
+      const userCart = this.carts.find((c: Cart) => c.userId === userId);
+      if (userCart) {
+        return userCart;
+      }
     }
 
     return null;
@@ -55,10 +57,12 @@ export class CartService {
   }
 
   getCartCount(): WritableSignal<number> {
+    console.warn('!appel get cart count!');
     return this.cartCount;
   }
 
   updateCartCount(): void {
+    console.warn('!update cart count called!');
     this.cartCount.set(this.getUserCart(this.authService.currentUser$()?.id)?.flowers.size ?? 0);
   }
 

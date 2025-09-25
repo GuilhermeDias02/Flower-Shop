@@ -15,7 +15,7 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
   template: `
-    <app-header [pageTitle]="'Admin menu'" [homeLink]="'/shop'"></app-header>
+    <app-header [pageTitle]="'Admin menu'"></app-header>
     <div class="min-h-screen bg-gray-100 flex items-center justify-center">
       <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-lg">
         <h2 class="text-2xl font-bold text-indigo-700 mb-6">Create New Flower</h2>

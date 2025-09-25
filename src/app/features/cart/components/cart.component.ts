@@ -11,7 +11,7 @@ import { Cart } from '../models/cart.model';
   standalone: true,
   imports: [HeaderComponent, CurrencyPipe],
   template: `
-    <app-header [pageTitle]="'Cart'" [homeLink]="'/shop'"></app-header>
+    <app-header [pageTitle]="'Cart'"></app-header>
     <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-auto">
       <h2 class="text-xl font-bold mb-4 text-gray-800">Your Cart</h2>
 
@@ -70,6 +70,10 @@ export class CartComponent {
   private authService = inject(AuthService);
   private flowerService = inject(FlowerService);
   userCart = signal<Cart | null>(this.cartService.getUserCart(this.authService.currentUser$()?.id));
+
+  constructor() {
+    console.warn('! cart component loaded !');
+  }
 
   flowerName(flowerId: number): string {
     return this.flowerService.getFlowerNameById(flowerId);
