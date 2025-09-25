@@ -12,6 +12,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { AutoFocusDirective } from '../../../../shared/directives/autoFocus.directive';
 
 // Validateur personnalisé pour la confirmation de mot de passe
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -27,7 +28,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, HeaderComponent, AutoFocusDirective],
   template: `
     <app-header [pageTitle]="'Register'"></app-header>
     <div class="flex w-full items-center justify-center min-h-screen">
@@ -42,6 +43,7 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
               placeholder="Enter your full name"
               class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               [class.border-red-500]="isFieldInvalid('name')"
+              appAutoFocus
             />
             @if (isFieldInvalid('name')) {
               <p class="mt-1 text-sm text-red-600">

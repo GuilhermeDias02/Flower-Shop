@@ -9,11 +9,12 @@ import { AuthService } from '../../auth/services/auth.service';
 import { FlowerService } from '../../flowers/services/flowers.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { AutoFocusDirective } from '../../../shared/directives/autoFocus.directive';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, AutoFocusDirective],
   template: `
     <app-header [pageTitle]="'Admin menu'"></app-header>
     <div class="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -29,6 +30,7 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
               type="text"
               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
               placeholder="Rose"
+              appAutoFocus
             />
             @if (flowerForm.controls.name.invalid && flowerForm.controls.name.touched) {
               <p class="text-red-500 text-sm mt-1">Name is required</p>
